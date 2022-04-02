@@ -2,6 +2,8 @@ import * as three from "three";
 import gsap from "gsap";
 import "./style.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import earthTexture from "./textures/earth.jpeg"
+
 // controls
 const cursor = {
   x: 0,
@@ -20,7 +22,7 @@ const group = new three.Group();
 scene.add(group);
 
 // texture
-const texture = new three.TextureLoader().load("./textures/earth.jpeg");
+const texture = new three.TextureLoader().load(earthTexture);
 
 // objects
 const earth = new three.Mesh(
