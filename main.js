@@ -19,15 +19,18 @@ const scene = new three.Scene();
 const group = new three.Group();
 scene.add(group);
 
+// texture
+const texture = new three.TextureLoader().load("textures/earth.jpeg");
+
 // objects
-const cube1 = new three.Mesh(
-  new three.BoxGeometry(1, 1, 1),
-  new three.MeshBasicMaterial({ color: "red" })
+const earth = new three.Mesh(
+  new three.SphereGeometry(4, 32, 16),
+  new three.MeshBasicMaterial({ map: texture })
 );
 
-cube1.scale.set(0.75, 0.75, 0.75);
+earth.scale.set(1.85, 1.85, 1.85);
 
-group.add(cube1);
+group.add(earth);
 
 // camera
 const sizes = { width: window.innerWidth, height: window.innerHeight };
@@ -57,7 +60,7 @@ const camera = new three.PerspectiveCamera(
   1000
 );
 
-camera.position.z = 3;
+camera.position.z = 30;
 
 scene.add(camera);
 
@@ -81,6 +84,8 @@ const clock = new three.Clock();
 const tick = () => {
   // current time
   const elapsedTime = clock.getElapsedTime();
+
+  earth.rotation.y = elapsedTime * 0.2;
 
   controls.update();
   // render
