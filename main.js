@@ -20,7 +20,7 @@ const group = new three.Group();
 scene.add(group);
 
 // texture
-const texture = new three.TextureLoader().load("textures/earth.jpeg");
+const texture = new three.TextureLoader().load("./textures/earth.jpeg");
 
 // objects
 const earth = new three.Mesh(
