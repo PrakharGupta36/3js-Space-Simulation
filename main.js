@@ -1,5 +1,6 @@
 import * as three from "three";
 import gsap from "gsap";
+import "./style.css";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // controls
 const cursor = {
