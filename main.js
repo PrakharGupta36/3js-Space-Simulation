@@ -38,12 +38,12 @@ const textureSun = new three.TextureLoader().load(sunTexture);
 // objects
 const earth = new three.Mesh(
   new three.SphereGeometry(4, 32, 16),
-  new three.MeshBasicMaterial({ map: textureEarth })
+  new three.MeshStandardMaterial({ map: textureEarth })
 );
 
 const moon = new three.Mesh(
   new three.SphereGeometry(1.5, 32, 16),
-  new three.MeshBasicMaterial({ map: textureMoon })
+  new three.MeshStandardMaterial({ map: textureMoon })
 );
 
 // const sun = new three.Mesh(
@@ -55,7 +55,11 @@ moon.position.x = 12;
 
 earth.scale.set(1.85, 1.85, 1.85);
 
-group.add(earth, moon);
+// light
+
+const ambientLight = new three.AmbientLight(0xffffff);
+
+group.add(earth, moon, ambientLight);
 
 // GUI
 gui.add(earth.position, "x").min(-3).max(3).step(0.01);
