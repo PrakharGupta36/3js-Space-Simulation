@@ -8,8 +8,6 @@ import spaceTexture from "./textures/space.jpeg";
 import sunTexture from "./textures/sun.jpeg";
 import * as dat from "dat.gui";
 
-console.log(dat);
-
 // UI Controls
 const gui = new dat.GUI({ closed: true });
 
@@ -31,9 +29,12 @@ const group = new three.Group();
 scene.add(group);
 
 // texture
-const textureEarth = new three.TextureLoader().load(earthTexture);
-const textureMoon = new three.TextureLoader().load(moonTexture);
-const textureSun = new three.TextureLoader().load(sunTexture);
+const loadingManager = new three.LoadingManager();
+const textureLoader = new three.TextureLoader(loadingManager);
+
+const textureEarth = textureLoader.load(earthTexture);
+const textureMoon = textureLoader.load(moonTexture);
+const textureSun = textureLoader.load(sunTexture);
 
 // objects
 const earth = new three.Mesh(
@@ -46,20 +47,19 @@ const moon = new three.Mesh(
   new three.MeshStandardMaterial({ map: textureMoon })
 );
 
-// const sun = new three.Mesh(
-//   new three.SphereGeometry(2, 32, 16),
-//   new three.MeshBasicMaterial({ map: textureSun })
-// );
+const sun = new three.Mesh(
+  new three.SphereGeometry(18, 32, 16),
+  new three.MeshStandardMaterial({ map: textureSun })
+);
 
 moon.position.x = 12;
+sun.position.x = 1000;
 
 earth.scale.set(1.85, 1.85, 1.85);
 
 // light
 
-const ambientLight = new three.AmbientLight(0xffffff);
-
-group.add(earth, moon, ambientLight);
+group.add(earth, moon, sun);
 
 // GUI
 gui.add(earth.position, "x").min(-3).max(3).step(0.01);
@@ -100,6 +100,14 @@ const camera = new three.PerspectiveCamera(
 
 camera.position.z = 30;
 
+const light = new three.DirectionalLight(0xffffff, 1, Infinity);
+light.position.set(0, 0, 1);
+
+const pointLight = new three.PointLight(0xe68729, 300, 1000);
+pointLight.position.set(sun.position.x, sun.position.y, sun.position.z);
+
+camera.add(light, pointLight);
+
 scene.add(camera);
 
 // background texture
@@ -111,6 +119,7 @@ scene.background = background;
 let canvas = document.querySelector(".webgl");
 const rendered = new three.WebGLRenderer({
   canvas: canvas,
+  antialias: true,
 });
 rendered.setSize(sizes.width, sizes.height);
 rendered.setPixelRatio(Math.min(window.devicePixelRatio, 3));
@@ -130,8 +139,10 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   earth.rotation.y = elapsedTime * 0.2;
-  moon.position.x = 20 * Math.cos(t) + 0;
-  moon.position.z = 20 * Math.sin(t) + 0;
+  sun.rotation.y = elapsedTime;
+
+  moon.position.x = 20 * Math.cos(t);
+  moon.position.z = 20 * Math.sin(t);
 
   controls.update();
   // render
