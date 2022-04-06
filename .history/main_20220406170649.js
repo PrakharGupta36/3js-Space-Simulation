@@ -115,15 +115,11 @@ const camera = new three.PerspectiveCamera(
 
 camera.position.z = 30;
 
-const light = new three.DirectionalLight(0xdfdfdf, 2, Infinity);
+const light = new three.DirectionalLight(0xdfdfdf, 1, Infinity);
 light.position.set(sun.position.x, sun.position.y, sun.position.z);
 
 const pointLight = new three.PointLight(0xe68729, 300, 1000);
-pointLight.position.set(
-  sun.position.x + 1,
-  sun.position.y + 1,
-  sun.position.z + 1
-);
+pointLight.position.set(sun.position.x, sun.position.y, sun.position.z);
 
 camera.add(light, pointLight);
 
