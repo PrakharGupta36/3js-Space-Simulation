@@ -146,7 +146,7 @@ particlesGeometry.setAttribute(
 
 const particles = new three.Points(
   particlesGeometry,
-  new three.PointsMaterial({ size: 0.01, sizeAttenuation: true , color: "white"})
+  new three.PointsMaterial({ size: 0.009, sizeAttenuation: true , color: "white"})
 );
 
 scene.add(particles);

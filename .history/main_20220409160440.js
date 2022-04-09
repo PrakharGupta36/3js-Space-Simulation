@@ -136,20 +136,21 @@ const count = 500;
 const position = new Float32Array(count * 3);
 
 for (let i = 0; i < count * 3; i++) {
-  position[i] = (Math.random() - 0.5) * 100;
+  position[i] = (Math.random() - 0.5) * 10;
 }
 
 particlesGeometry.setAttribute(
   "position",
-  new three.BufferAttribute(position, 3)
+  new THREE.BufferAttribute(position, 3)
 );
 
 const particles = new three.Points(
   particlesGeometry,
-  new three.PointsMaterial({ size: 0.01, sizeAttenuation: true , color: "white"})
+  new THREE.PointsMaterial({ size: 0.009, sizeAttenuation: true })
 );
 
 scene.add(particles);
+
 
 // rendered
 let canvas = document.querySelector(".webgl");

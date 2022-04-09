@@ -115,7 +115,7 @@ const camera = new three.PerspectiveCamera(
 
 camera.position.z = 30;
 
-const light = new three.DirectionalLight(0xdfdfdf, 1, Infinity);
+const light = new three.DirectionalLight(0xdfdfdf, 2, Infinity);
 light.position.set(sun.position.x, sun.position.y, sun.position.z);
 
 const pointLight = new three.PointLight(0xe68729, 300, 1000);
@@ -130,26 +130,9 @@ camera.add(light, pointLight);
 scene.add(camera);
 
 // background texture
-const particlesGeometry = new three.BufferGeometry();
-const count = 500;
+let background = new three.TextureLoader().load(spaceTexture);
 
-const position = new Float32Array(count * 3);
-
-for (let i = 0; i < count * 3; i++) {
-  position[i] = (Math.random() - 0.5) * 100;
-}
-
-particlesGeometry.setAttribute(
-  "position",
-  new three.BufferAttribute(position, 3)
-);
-
-const particles = new three.Points(
-  particlesGeometry,
-  new three.PointsMaterial({ size: 0.01, sizeAttenuation: true , color: "white"})
-);
-
-scene.add(particles);
+scene.background = background;
 
 // rendered
 let canvas = document.querySelector(".webgl");
